@@ -35,13 +35,16 @@ Save settings [y/n] (y)? y
 Saving...done
 Ambari Server 'setup-ldap' completed successfully.
 ```
+
+```
 [root@masternode ~]# ambari-server restart
 Using python  /usr/bin/python
 Restarting ambari-serveruid=ldapbind,cn=users,cn=accounts,dc=us-west2-a,dc=c,dc=dark-park-255906,dc=internal
+```
 
+### 2. Test the user for ldapsearch to make sure it is available in ipa server 
 
-2. Test the user for ldapsearch to make sure it is available in ipa server 
-
+```
 [root@masternode ~]# ldapsearch -x -h ipa-server.us-west2-a.c.dark-park-255906.internal  -b cn=users,cn=accounts,dc=us-west2-a,dc=c,dc=dark-park-255906,dc=internal uid=swamy
 
 # swamy, users, accounts, us-west2-a.c.dark-park-255906.internal
@@ -78,15 +81,16 @@ result: 0 Success
 # numResponses: 2
 # numEntries: 1
 [root@masternode ~]# 
+```
 
-3. Create the user list which are already part of ldap
-
+### 3. Create the user list which are already part of ldap
+```
 [root@masternode ~]# cat users.txt 
 harsha,swamy
 [root@masternode ~]# 
-
-4. Sync the users 
-
+```
+### 4. Sync the users 
+```
 [root@masternode ~]# ambari-server sync-ldap --users users.txt
 Using python  /usr/bin/python
 Syncing with LDAP...
@@ -108,15 +112,15 @@ Summary:
     updated = 0
     removed = 0
     created = 0
+```
 
 
 
+# KNOX - Config changes: 
 
-KNOX - Config changes: 
+### Advanced topology: 
 
-Advanced topology: 
-
-
+```
 uid={0},cn=users,cn=accounts,dc=us-west2-a,dc=c,dc=dark-park-255906,dc=internal
 
 <param>
@@ -139,16 +143,20 @@ uid={0},cn=users,cn=accounts,dc=us-west2-a,dc=c,dc=dark-park-255906,dc=internal
    <url>http://ip-172-31-26-231.us-west-1.compute.internal:8080</url>
 </service>
 
+```
 
 https://masternode.us-west2-a.c.dark-park-255906.internal:8443/gateway/knoxsso/api/v1/websso
-
+# sso certificate
+```
 [root@ip-172-31-26-231 bin]# ./knoxcli.sh export-cert --type PEM
 Certificate gateway-identity has been successfully exported to: /usr/hdp/3.1.4.0-315/knox/data/security/keystores/gateway-identity.pem
 [root@ip-172-31-26-231 bin]#
 [root@ip-172-31-26-231 bin]# cat /usr/hdp/3.1.4.0-315/knox/data/security/keystores/gateway-identity.pem
+```
 
-Setup the Ambari SSO: 
+# Setup the Ambari SSO: 
 
+```
 [root@masternode knox]# ambari-server setup-sso
 Using python  /usr/bin/python
 Setting up SSO authentication properties...
@@ -165,3 +173,4 @@ Do you want to configure advanced properties [y/n] (n) ?y
 JWT Cookie name (hadoop-jwt):
 JWT audiences list (comma-separated), empty for any ():
 Ambari Server 'setup-sso' completed successfully.
+```
