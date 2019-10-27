@@ -5,8 +5,8 @@
 
 
 Step1: Setup the LDAP
-
-'[root@masternode ~]# ambari-server setup-ldap
+```
+[root@masternode ~]# ambari-server setup-ldap
 Using python  /usr/bin/python
 Setting up LDAP properties...
 Primary URL* {host:port} (ipa-server.us-west2-a.c.dark-park-255906.internal:389): 
@@ -33,7 +33,8 @@ authentication.ldap.managerDn: uid=ldapbind,cn=users,cn=accounts,dc=us-west2-a,d
 authentication.ldap.managerPassword: *****
 Save settings [y/n] (y)? y
 Saving...done
-Ambari Server 'setup-ldap' completed successfully.'
+Ambari Server 'setup-ldap' completed successfully.
+```
 [root@masternode ~]# ambari-server restart
 Using python  /usr/bin/python
 Restarting ambari-serveruid=ldapbind,cn=users,cn=accounts,dc=us-west2-a,dc=c,dc=dark-park-255906,dc=internal
